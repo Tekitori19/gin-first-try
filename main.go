@@ -33,18 +33,20 @@ func main() {
 		middlewares.BasicAuth(),
 	)
 
-	server.GET("/hello", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusAccepted, gin.H{
-			"Phan": "Duong Dinh",
-		})
-	})
-
 	server.GET("/videos", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusAccepted, videoController.FindAll())
 	})
 
 	server.POST("/videos", func(ctx *gin.Context) {
-		ctx.JSON(http.StatusAccepted, videoController.Save(ctx))
+		if err := videoController.Save(ctx); err != nil {
+			ctx.JSON(http.StatusBadRequest, gin.H{
+				"err": err.Error(),
+			})
+		} else {
+			ctx.JSON(http.StatusAccepted, gin.H{
+				"message":"valid",
+			})
+		}
 	})
 
 	server.Run(":8080")
