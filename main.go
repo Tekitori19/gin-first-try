@@ -1,9 +1,12 @@
 package main
 
 import (
+	"io"
 	"net/http"
+	"os"
 
 	"github.com/Tekitori19/gin-first-try/get_started/controllers"
+	"github.com/Tekitori19/gin-first-try/get_started/middlewares"
 	"github.com/Tekitori19/gin-first-try/get_started/service"
 	"github.com/gin-gonic/gin"
 )
@@ -13,8 +16,23 @@ var (
 	videoController controllers.VideoController = controllers.New(videoService)
 )
 
+func setupLogOutput() {
+	f, _ := os.Create("gin.log")
+	defer f.Close()
+	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
+}
+
 func main() {
-	server := gin.Default()
+
+	setupLogOutput()
+
+	server := gin.New()
+
+	server.Use(
+		gin.Recovery(),
+		middlewares.Logger(),
+		middlewares.BasicAuth(),
+	)
 
 	server.GET("/hello", func(ctx *gin.Context) {
 		ctx.JSON(http.StatusAccepted, gin.H{
