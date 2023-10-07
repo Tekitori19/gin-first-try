@@ -1,0 +1,6 @@
+Mô hình mvc:
+    MVC là viết tắt của cụm từ “Model-View-Controller“. Đây là mô hình thiết kế được sử dụng trong kỹ thuật phần mềm. MVC là một mẫu kiến trúc phần mềm để tạo lập giao diện người dùng trên máy tính. MVC chia thành ba phần được kết nối với nhau và mỗi thành phần đều có một nhiệm vụ riêng của nó và độc lập với các thành phần khác. Tên gọi 3 thành phần:
+
+        Model (dữ liệu): Quản lí xử lí các dữ liệu.
+        View (giao diện): Nơi hiển thị dữ liệu cho người dùng.
+        Controller (bộ điều khiển): Điều khiển sự tương tác của hai thành phần Model và View.
