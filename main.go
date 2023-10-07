@@ -18,7 +18,6 @@ var (
 
 func setupLogOutput() {
 	f, _ := os.Create("gin.log")
-	defer f.Close()
 	gin.DefaultWriter = io.MultiWriter(f, os.Stdout)
 }
 
