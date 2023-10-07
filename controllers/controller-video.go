@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"net/http"
+
 	"github.com/Tekitori19/gin-first-try/get_started/entity"
 	"github.com/Tekitori19/gin-first-try/get_started/service"
 	"github.com/Tekitori19/gin-first-try/get_started/validators"
@@ -11,6 +13,7 @@ import (
 type VideoController interface {
 	Save(*gin.Context) error
 	FindAll() []entity.Video
+	ShowAll(*gin.Context)
 }
 
 type controller struct {
@@ -42,4 +45,13 @@ func New(service service.VideoService) VideoController {
 	return &controller{
 		service: service,
 	}
+}
+
+func (c *controller) ShowAll(ctx *gin.Context)  {
+	videos := c.service.FindAll()
+	data := gin.H {
+		"title": "Gin",
+		"videos": videos,
+	}
+	ctx.HTML(http.StatusOK, "index.html", data)
 }
